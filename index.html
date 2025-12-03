@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fresh vs Rotten Fruit Classification</title>
+
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+        line-height: 1.6;
+        background: #fafafa;
+        color: #222;
+    }
+    h1, h2, h3 {
+        color: #21618C;
+    }
+    img {
+        max-width: 100%;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+    }
+    .section {
+        margin-bottom: 40px;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+    .gallery {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: 1fr 1fr;
+    }
+    footer {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 14px;
+        color: #666;
+    }
+</style>
+
+</head>
+<body>
+
+<!-- ================== TITLE ================== -->
+
+<h1>Fresh vs Rotten Fruit Classification</h1>
+<p><b>Author:</b> Brandon Antoine</p>
+<p><b>Course:</b> Deep Learning</p>
+
+<!-- ================== DESCRIPTION ================== -->
+
+<div class="section">
+<h2>1. Problem Description & Motivation</h2>
+<p>
+The goal of this project is to automatically classify images of fruit as either 
+<strong>fresh</strong> or <strong>rotten</strong> using a deep learning model. 
+Detecting spoiled food is important in grocery stores, agriculture, and supply-chain 
+automation, where real-time decisions about food quality can reduce cost, food waste, 
+and health risks.
+</p>
+<p>
+This project explores whether a classic deep learning architecture, <strong>AlexNet</strong>, 
+can effectively perform binary image classification on a dataset of fruit while using 
+modern training techniques, data augmentation, and hyperparameter tuning. 
+</p>
+</div>
+
+<!-- ================== TECHNICAL APPROACH ================== -->
+
+<div class="section">
+<h2>2. Technical Approach</h2>
+
+<h3>Dataset</h3>
+<p>
+The dataset is the <em>Fresh and Rotten Fruit Dataset</em> from Kaggle, containing fruit 
+images labeled as fresh or rotten. Images are split into train/validation/test folders.
+</p>
+
+<h3>Preprocessing</h3>
+<ul>
+    <li>Resize to 224×224 pixels</li>
+    <li>Normalize using ImageNet statistics</li>
+    <li>Data augmentation (optional): 
+        flips, rotations, color jitter
+    </li>
+    <li>Batch loading using PyTorch DataLoader</li>
+</ul>
+
+<h3>Model Architecture</h3>
+<p>
+The model used is <strong>AlexNet</strong>, with modifications:
+</p>
+<ul>
+    <li>Pretrained ImageNet weights</li>
+    <li>Final layer replaced with 2-class classifier</li>
+    <li>Adam optimizer</li>
+    <li>Cross-entropy loss</li>
+</ul>
+
+</div>
+
+<!-- ================== EXPERIMENTS ================== -->
+
+<div class="section">
+<h2>3. Experiments</h2>
+
+<p>Four main experiments were conducted to analyze model behavior:</p>
+
+<h3>3.1 Batch Size</h3>
+<p>
+Compared <strong>batch size 16 vs 64</strong>.  
+Smaller batches produced better validation accuracy but trained slower.
+</p>
+
+<h3>3.2 Learning Rate</h3>
+<p>
+Compared <strong>1e-3 vs 1e-4</strong>.  
+Lower learning rate converged slower but produced more stable training.
+</p>
+
+<h3>3.3 Data Augmentation</h3>
+<p>
+Training with augmentation reduced overfitting and improved validation accuracy.
+</p>
+
+<h3>3.4 Architecture Comparison</h3>
+<p>
+Compared <strong>AlexNet vs ResNet18</strong>.  
+ResNet achieved higher accuracy, but AlexNet trained faster.
+</p>
+
+</div>
+
+<!-- ================== VISUALIZATIONS ================== -->
+
+<div class="section">
+<h2>4. Visualizations</h2>
+
+<p>
+The following visualizations were generated using 
+<strong>Weights & Biases (wandb)</strong>.
+</p>
+
+<div class="gallery">
+
+<div>
+<h3>Training Accuracy</h3>
+<img src="images/accuracy.png" alt="Training and Validation Accuracy Plot">
+</div>
+
+<div>
+<h3>Training Loss</h3>
+<img src="images/loss.png" alt="Training and Validation Loss Plot">
+</div>
+
+<div>
+<h3>Confusion Matrix</h3>
+<img src="images/confusion_matrix.png" alt="Confusion Matrix">
+</div>
+
+<div>
+<h3>Sample Predictions</h3>
+<img src="images/examples.png" alt="Sample Predictions">
+</div>
+
+</div>
+
+</div>
+
+<!-- ================== RESULTS ================== -->
+
+<div class="section">
+<h2>5. Results & Key Findings</h2>
+
+<ul>
+    <li>Best validation accuracy achieved: <strong>~90–95%</strong></li>
+    <li>Data augmentation significantly improved generalization</li>
+    <li>Smaller batch sizes tended to perform better</li>
+    <li>Lower learning rate prevented overfitting</li>
+    <li>ResNet outperformed AlexNet but required more compute</li>
+</ul>
+
+<p>
+Overall, AlexNet is still capable of strong performance on small image classification 
+tasks when combined with modern training practices.
+</p>
+
+</div>
+
+<!-- ================== TAKEAWAYS ================== -->
+
+<div class="section">
+<h2>6. Takeaways</h2>
+
+<ul>
+    <li>Pretrained models drastically reduce training time</li>
+    <li>Data augmentation is crucial for small datasets</li>
+    <li>Hyperparameters matter — especially batch size and LR</li>
+    <li>Modern architectures outperform legacy models</li>
+    <li>wandb is extremely useful for experiment tracking</li>
+</ul>
+
+</div>
+
+<!-- ================== LINKS ================== -->
+
+<div class="section">
+<h2>7. Links</h2>
+
+<ul>
+    <li><a href="https://colab.research.google.com">Colab Notebook</a></li>
+    <li><a href="#">Dataset (Kaggle)</a></li>
+    <li><a href="https://wandb.ai">Weights & Biases Project</a></li>
+    <li><a href="https://github.com/">GitHub Repository</a></li>
+</ul>
+
+</div>
+
+<footer>
+    <p>© 2024 Fresh vs Rotten Fruit Classification</p>
+</footer>
+
+</body>
+</html>
