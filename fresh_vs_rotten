@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fresh vs Rotten Fruit Classification</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    background: #fafafa;
+    color: #222;
+  }
+  header {
+    background: #3b7dd8;
+    color: white;
+    padding: 2rem;
+    text-align: center;
+  }
+  main {
+    max-width: 900px;
+    margin: auto;
+    padding: 2rem;
+  }
+  h1, h2, h3 {
+    color: #3b7dd8;
+  }
+  img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 1rem 0;
+  }
+  .card {
+    background: white;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.1);
+  }
+  a {
+    color: #3b7dd8;
+  }
+  footer {
+    background: #eee;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Fresh vs. Rotten Fruit Classification</h1>
+  <p>Deep Learning with AlexNet and Model Comparison</p>
+</header>
+
+<main>
+
+  <!-- PROBLEM + MOTIVATION -->
+  <section class="card">
+    <h2>Problem & Motivation</h2>
+    <p>
+      Food waste is a major problem globally, and early detection of spoiled produce can
+      help reduce waste and improve food safety. However, visually determining when fruit is
+      rotten can be inconsistent and subjective.
+    </p>
+    <p>
+      In this project, we explore whether an image classification model can automatically
+      detect whether fruit is <strong>fresh</strong> or <strong>rotten</strong> using computer vision.
+      We train AlexNet on a dataset of labeled fruit images and evaluate its performance
+      under different training conditions.
+    </p>
+  </section>
+
+  <!-- TECHNICAL APPROACH -->
+  <section class="card">
+    <h2>Technical Approach</h2>
+    <p>
+      We implemented and trained <strong>AlexNet</strong> in PyTorch, adapting the architecture for a
+      binary classification task. The model was trained on images of fruit that were resized
+      to <strong>224×224 pixels</strong> and normalized according to ImageNet standards.
+    </p>
+    <h3>Data Preprocessing</h3>
+    <ul>
+      <li>Resize to 224×224</li>
+      <li>Normalization</li>
+      <li>Optional data augmentation</li>
+      <li>Train/validation/test split</li>
+    </ul>
+
+    <h3>Experiments Conducted</h3>
+    <ul>
+      <li>Batch size comparison: 16 vs 64</li>
+      <li>Learning rate comparison: 0.001 vs 0.0001</li>
+      <li>Training with/without data augmentation</li>
+      <li>Model comparison: AlexNet vs ResNet18</li>
+    </ul>
+  </section>
+
+  <!-- VISUALIZATIONS -->
+  <section class="card">
+    <h2>Visualizations</h2>
+    <p>
+      These are screenshots exported from Weights & Biases showing model behavior during training.
+      (Replace the placeholders with your own images.)
+    </p>
+
+    <h3>Training vs Validation Accuracy</h3>
+    <img src="images/accuracy.png" alt="accuracy plot placeholder" />
+
+    <h3>Training vs Validation Loss</h3>
+    <img src="images/loss.png" alt="loss plot placeholder" />
+
+    <h3>Confusion Matrix</h3>
+    <img src="images/confusion.png" alt="confusion matrix placeholder" />
+  </section>
+
+  <!-- RESULTS -->
+  <section class="card">
+    <h2>Results & Findings</h2>
+    <h3>Batch Size Experiment</h3>
+    <p>
+      Smaller batch size (16) converged more steadily and achieved higher validation accuracy.
+      Larger batch size (64) was faster per epoch but less consistent.
+    </p>
+
+    <h3>Learning Rate Experiment</h3>
+    <p>
+      A learning rate of <strong>0.001</strong> trained faster but occasionally overfit.
+      A lower rate <strong>0.0001</strong> produced smoother convergence but required more epochs.
+    </p>
+
+    <h3>Data Augmentation Experiment</h3>
+    <p>
+      Applying augmentation noticeably reduced overfitting and improved generalization,
+      especially for rotten fruit, which had more visual variation.
+    </p>
+
+    <h3>Architecture Comparison</h3>
+    <p>
+      AlexNet performed reasonably well but plateaued early.
+      ResNet18 achieved higher accuracy and was less prone to overfitting,
+      highlighting the benefits of deeper modern architectures.
+    </p>
+  </section>
+
+  <!-- TAKEAWAYS -->
+  <section class="card">
+    <h2>Key Takeaways</h2>
+    <ul>
+      <li>Model capacity and regularization strongly influence performance.</li>
+      <li>Data augmentation is essential when working with small or imbalanced datasets.</li>
+      <li>Hyperparameters (especially LR and batch size) significantly impact results.</li>
+      <li>ResNet outperformed AlexNet due to residual learning and deeper architecture.</li>
+    </ul>
+    <p>
+      Overall, deep learning can reliably distinguish fresh and rotten fruit,
+      demonstrating potential applications in food quality monitoring.
+    </p>
+  </section>
+
+  <!-- LINKS -->
+  <section class="card">
+    <h2>Project Links</h2>
+    <p><strong>Google Colab Notebook:</strong><br/>
+      <a href="https://colab.research.google.com/drive/1XLLu2RoeWz_1GWljQrs06QHmbYTOJdFm?usp=sharing" target="_blank">
+        View Notebook
+      </a>
+    </p>
+
+    <p><strong>Weights & Biases Project:</strong><br/>
+      <a href="https://wandb.ai/bantoine2024-florida-atlantic-university/fresh-vs-rotten-fruit/table?nw=nwuserbantoine2024" target="_blank">
+        View W&B Dashboard
+      </a>
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2024 Fresh vs Rotten Fruit Classification Project</p>
+</footer>
+
+</body>
+</html>
+
+
+
