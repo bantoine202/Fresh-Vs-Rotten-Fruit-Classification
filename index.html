@@ -7,224 +7,280 @@
 
 <style>
     body {
-        font-family: Arial, Helvetica, sans-serif;
-        max-width: 900px;
-        margin: auto;
-        padding: 20px;
+        margin: 0;
+        font-family: "Inter", Arial, sans-serif;
+        background: #f7f8fc;
+        color: #333;
         line-height: 1.6;
-        background: #fafafa;
-        color: #222;
     }
-    h1, h2, h3 {
-        color: #21618C;
+
+    header {
+        background: linear-gradient(135deg, #4f46e5, #06b6d4);
+        color: white;
+        text-align: center;
+        padding: 80px 20px;
     }
+
+    header h1 {
+        font-size: 3rem;
+        margin: 0 0 10px;
+        font-weight: 700;
+    }
+
+    header p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+
+    nav {
+        background: white;
+        display: flex;
+        justify-content: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    nav a {
+        padding: 15px 20px;
+        text-decoration: none;
+        color: #444;
+        font-weight: 600;
+    }
+    nav a:hover {
+        color: #4f46e5;
+    }
+
+    section {
+        max-width: 950px;
+        margin: 60px auto;
+        padding: 0 20px;
+    }
+
+    h2 {
+        font-size: 2rem;
+        color: #4f46e5;
+        margin-bottom: 10px;
+    }
+
+    h3 {
+        color: #333;
+        font-size: 1.4rem;
+        margin-top: 30px;
+    }
+
     img {
         max-width: 100%;
-        border-radius: 8px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin: 20px 0;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     }
-    .section {
-        margin-bottom: 40px;
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-    }
-    .gallery {
-        display: grid;
-        gap: 20px;
-        grid-template-columns: 1fr 1fr;
-    }
+
     footer {
         text-align: center;
-        margin-top: 40px;
-        font-size: 14px;
+        padding: 30px;
+        background: #fff;
+        margin-top: 80px;
+        border-top: 1px solid #ddd;
         color: #666;
     }
-</style>
 
+    .card {
+        background: white;
+        padding: 25px;
+        margin: 30px 0;
+        border-radius: 12px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+
+    ul {
+        padding-left: 20px;
+    }
+
+    strong {
+        color: #111;
+    }
+
+    @media(max-width: 650px){
+        header h1 {
+            font-size: 2.2rem;
+        }
+    }
+</style>
 </head>
+
 <body>
 
-<!-- ================== TITLE ================== -->
+<header>
+    <h1>Fresh vs Rotten Fruit Classification</h1>
+    <p>Using Deep Learning to Identify Fresh and Rotten Produce</p>
+</header>
 
-<h1>Fresh vs Rotten Fruit Classification</h1>
-<p><b>Author:</b> Brandon Antoine</p>
-<p><b>Course:</b> Deep Learning</p>
+<nav>
+    <a href="#problem">Problem</a>
+    <a href="#method">Method</a>
+    <a href="#experiments">Experiments</a>
+    <a href="#results">Results</a>
+    <a href="#takeaways">Takeaways</a>
+</nav>
 
-<!-- ================== DESCRIPTION ================== -->
 
-<div class="section">
-<h2>1. Problem Description & Motivation</h2>
-<p>
-The goal of this project is to automatically classify images of fruit as either 
-<strong>fresh</strong> or <strong>rotten</strong> using a deep learning model. 
-Detecting spoiled food is important in grocery stores, agriculture, and supply-chain 
-automation, where real-time decisions about food quality can reduce cost, food waste, 
-and health risks.
-</p>
-<p>
-This project explores whether a classic deep learning architecture, <strong>AlexNet</strong>, 
-can effectively perform binary image classification on a dataset of fruit while using 
-modern training techniques, data augmentation, and hyperparameter tuning. 
-</p>
-</div>
+<!-- PROBLEM -->
+<section id="problem">
+    <h2>Problem Description & Motivation</h2>
 
-<!-- ================== TECHNICAL APPROACH ================== -->
+    <div class="card">
+        <p>
+        Food waste is a major economic and environmental issue. Consumers, grocery stores, and restaurants
+        often visually inspect food quality, which is subjective, inconsistent, and time-consuming.
+        Automatically detecting rotten produce could support:
+        </p>
 
-<div class="section">
-<h2>2. Technical Approach</h2>
+        <ul>
+            <li>Reducing waste and cost</li>
+            <li>Improving food safety</li>
+            <li>Automating sorting in supply chains</li>
+        </ul>
 
-<h3>Dataset</h3>
-<p>
-The dataset is the <em>Fresh and Rotten Fruit Dataset</em> from Kaggle, containing fruit 
-images labeled as fresh or rotten. Images are split into train/validation/test folders.
-</p>
+        <p>
+        This project applies **deep learning image classification** to detect whether fruit is
+        <strong>fresh</strong> or <strong>rotten</strong> using consumer-grade images.
+        </p>
 
-<h3>Preprocessing</h3>
-<ul>
-    <li>Resize to 224×224 pixels</li>
-    <li>Normalize using ImageNet statistics</li>
-    <li>Data augmentation (optional): 
-        flips, rotations, color jitter
-    </li>
-    <li>Batch loading using PyTorch DataLoader</li>
-</ul>
+        <p>
+        The goal is to design a **fast, lightweight, accurate model with real-world potential**.
+        </p>
+    </div>
+</section>
 
-<h3>Model Architecture</h3>
-<p>
-The model used is <strong>AlexNet</strong>, with modifications:
-</p>
-<ul>
-    <li>Pretrained ImageNet weights</li>
-    <li>Final layer replaced with 2-class classifier</li>
-    <li>Adam optimizer</li>
-    <li>Cross-entropy loss</li>
-</ul>
 
-</div>
+<!-- METHOD -->
+<section id="method">
+    <h2>Technical Approach</h2>
 
-<!-- ================== EXPERIMENTS ================== -->
+    <div class="card">
+        <h3>Dataset</h3>
+        <p>
+        The dataset consists of images of fresh and rotten apples, bananas, and oranges.
+        These were organized into a binary classification problem:
+        <strong>fresh</strong> vs <strong>rotten</strong>.
+        </p>
 
-<div class="section">
-<h2>3. Experiments</h2>
+        <h3>Model Architecture: AlexNet</h3>
+        <p>
+        The project uses <strong>AlexNet</strong>, a classic convolutional neural network,
+        fine-tuned with transfer learning. The final fully connected layer was replaced with a
+        2-class output layer.
+        </p>
 
-<p>Four main experiments were conducted to analyze model behavior:</p>
+        <h3>Preprocessing & Augmentation</h3>
+        <p>Images were resized to <strong>224×224</strong> and normalized. Augmentations included:</p>
 
-<h3>3.1 Batch Size</h3>
-<p>
-Compared <strong>batch size 16 vs 64</strong>.  
-Smaller batches produced better validation accuracy but trained slower.
-</p>
+        <ul>
+            <li>Random flips</li>
+            <li>Color jitter</li>
+            <li>Random rotation</li>
+        </ul>
 
-<h3>3.2 Learning Rate</h3>
-<p>
-Compared <strong>1e-3 vs 1e-4</strong>.  
-Lower learning rate converged slower but produced more stable training.
-</p>
+        <h3>Training Setup</h3>
+        <ul>
+            <li>Loss: CrossEntropy</li>
+            <li>Optimizer: Adam</li>
+            <li>Epochs: 5</li>
+            <li>Tracked metrics: accuracy, loss</li>
+        </ul>
 
-<h3>3.3 Data Augmentation</h3>
-<p>
-Training with augmentation reduced overfitting and improved validation accuracy.
-</p>
+        <h3>Tracking & Visualization</h3>
+        <p>
+        All experiments were logged using <strong>Weights & Biases</strong>,
+        including accuracy, loss, confusion matrices, and run comparisons.
+        </p>
+    </div>
+</section>
 
-<h3>3.4 Architecture Comparison</h3>
-<p>
-Compared <strong>AlexNet vs ResNet18</strong>.  
-ResNet achieved higher accuracy, but AlexNet trained faster.
-</p>
 
-</div>
+<!-- EXPERIMENTS -->
+<section id="experiments">
+    <h2>Experiments</h2>
 
-<!-- ================== VISUALIZATIONS ================== -->
+    <div class="card">
+        <p>
+        Four experiments were conducted on AlexNet and ResNet18:
+        </p>
 
-<div class="section">
-<h2>4. Visualizations</h2>
+        <ol>
+            <li><strong>Batch size:</strong> 16 vs 64</li>
+            <li><strong>Learning rate:</strong> 1e-3 vs 1e-4</li>
+            <li><strong>Augmentation:</strong> on vs off</li>
+            <li><strong>Architecture:</strong> AlexNet vs ResNet18</li>
+        </ol>
 
-<p>
-The following visualizations were generated using 
-<strong>Weights & Biases (wandb)</strong>.
-</p>
+        <p>
+        This allowed measurement of model robustness, training dynamics, and generalization.
+        </p>
+    </div>
+</section>
 
-<div class="gallery">
 
-<div>
-<h3>Training Accuracy</h3>
-<img src="images/accuracy.png" alt="Training and Validation Accuracy Plot">
-</div>
+<!-- RESULTS -->
+<section id="results">
+    <h2>Results & Visualizations</h2>
 
-<div>
-<h3>Training Loss</h3>
-<img src="images/loss.png" alt="Training and Validation Loss Plot">
-</div>
+    <div class="card">
+        <h3>Training Accuracy</h3>
+        <img src="images/accuracy.png" alt="Training Accuracy Plot">
 
-<div>
-<h3>Confusion Matrix</h3>
-<img src="images/confusion_matrix.png" alt="Confusion Matrix">
-</div>
+        <h3>Training Loss</h3>
+        <img src="images/loss.png" alt="Training Loss Plot">
 
-<div>
-<h3>Sample Predictions</h3>
-<img src="images/examples.png" alt="Sample Predictions">
-</div>
+        <h3>Confusion Matrix</h3>
+        <img src="images/confusion.png" alt="Confusion Matrix">
 
-</div>
+        <p>
+        The model achieved nearly **100% accuracy** on both training and validation sets,
+        and perfectly separated the two classes in the confusion matrix.
+        </p>
+    </div>
+</section>
 
-</div>
 
-<!-- ================== RESULTS ================== -->
+<!-- TAKEAWAYS -->
+<section id="takeaways">
+    <h2>Conclusions & Takeaways</h2>
 
-<div class="section">
-<h2>5. Results & Key Findings</h2>
+    <div class="card">
+        <h3>1. Batch Size</h3>
+        <p>
+        Smaller batches produced slightly smoother convergence, but both sizes converged.
+        </p>
 
-<ul>
-    <li>Best validation accuracy achieved: <strong>~90–95%</strong></li>
-    <li>Data augmentation significantly improved generalization</li>
-    <li>Smaller batch sizes tended to perform better</li>
-    <li>Lower learning rate prevented overfitting</li>
-    <li>ResNet outperformed AlexNet but required more compute</li>
-</ul>
+        <h3>2. Learning Rate</h3>
+        <p>
+        Lower learning rates improved stability and prevented noisy updates.
+        </p>
 
-<p>
-Overall, AlexNet is still capable of strong performance on small image classification 
-tasks when combined with modern training practices.
-</p>
+        <h3>3. Data Augmentation</h3>
+        <p>
+        Augmentation improved generalization and reduced overfitting risk.
+        </p>
 
-</div>
+        <h3>4. AlexNet vs ResNet18</h3>
+        <p>
+        ResNet18 trained faster and reached strong performance,
+        but AlexNet was sufficiently accurate and computationally lighter.
+        </p>
 
-<!-- ================== TAKEAWAYS ================== -->
+        <h3>Overall Finding</h3>
+        <p>
+        Deep learning can reliably detect fruit quality with extremely high accuracy
+        using lightweight architectures and modest datasets.
+        </p>
+    </div>
+</section>
 
-<div class="section">
-<h2>6. Takeaways</h2>
-
-<ul>
-    <li>Pretrained models drastically reduce training time</li>
-    <li>Data augmentation is crucial for small datasets</li>
-    <li>Hyperparameters matter — especially batch size and LR</li>
-    <li>Modern architectures outperform legacy models</li>
-    <li>wandb is extremely useful for experiment tracking</li>
-</ul>
-
-</div>
-
-<!-- ================== LINKS ================== -->
-
-<div class="section">
-<h2>7. Links</h2>
-
-<ul>
-    <li><a href="https://colab.research.google.com">Colab Notebook</a></li>
-    <li><a href="#">Dataset (Kaggle)</a></li>
-    <li><a href="https://wandb.ai">Weights & Biases Project</a></li>
-    <li><a href="https://github.com/">GitHub Repository</a></li>
-</ul>
-
-</div>
 
 <footer>
-    <p>© 2024 Fresh vs Rotten Fruit Classification</p>
+    <p>Fresh vs Rotten Fruit Classification — 2024</p>
 </footer>
 
 </body>
 </html>
+
