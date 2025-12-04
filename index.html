@@ -2,277 +2,342 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Fresh vs Rotten Fruit Classification – Britney Antoine</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fresh vs. Rotten Fruit Classification</title>
 
 <style>
     body {
         font-family: "Helvetica", Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background: #f3f5f9;
+        background: #f7f7f7;
         color: #222;
-        line-height: 1.6;
+        line-height: 1.7;
     }
 
     header {
-        background: linear-gradient(90deg, #ff6a00, #ee0979);
+        background: #00205B;
         color: white;
-        padding: 50px 20px;
+        padding: 40px;
         text-align: center;
     }
 
-    h1, h2, h3 {
-        font-weight: 700;
+    h1 {
+        font-size: 48px;
+        margin-bottom: 10px;
     }
-
     h2 {
-        margin-top: 50px;
-    }
-
-    .container {
-        width: 90%;
-        max-width: 1200px;
-        margin: auto;
-        padding-bottom: 50px;
+        color: #C8102E;
+        font-size: 32px;
+        border-bottom: 3px solid #C8102E;
+        padding-bottom: 5px;
     }
 
     section {
+        width: 80%;
+        margin: 40px auto;
         background: white;
-        margin-top: 30px;
         padding: 30px 40px;
-        border-radius: 12px;
-        box-shadow: 0px 4px 20px rgba(0,0,0,0.08);
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
     }
 
     img {
-        width: 90%;
+        width: 100%;
+        max-width: 900px;
         display: block;
-        margin: auto;
-        border-radius: 8px;
+        margin: 20px auto;
         border: 1px solid #ccc;
+        border-radius: 6px;
     }
 
     .caption {
         text-align: center;
         font-style: italic;
-        font-size: 0.95em;
-        color: #444;
-        margin-top: 10px;
-        margin-bottom: 25px;
+        margin-bottom: 30px;
+        color: #555;
     }
 
-    .footer {
-        text-align: center;
-        padding: 20px;
-        margin-top: 50px;
-        background-color: #333;
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 18px;
+    }
+    table th {
+        background: #00205B;
         color: white;
+        padding: 12px;
+    }
+    table td {
+        padding: 12px;
+        border: 1px solid #ddd;
     }
 
-    a {
-        color: #ee0979;
-        font-weight: bold;
-        text-decoration: none;
+    .diagram-box {
+        background: #eef3ff;
+        padding: 20px;
+        border-left: 6px solid #00205B;
+        border-radius: 6px;
+        font-size: 18px;
+        margin: 30px 0;
     }
-    a:hover { text-decoration: underline; }
 
+    footer {
+        padding: 40px;
+        background: #00205B;
+        color: #fff;
+        text-align: center;
+        margin-top: 50px;
+        font-size: 18px;
+    }
+
+    a { color: #C8102E; font-weight: bold; }
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>Fresh vs. Rotten Fruit Image Classification</h1>
-    <h3>By Britney Antoine | Mathematics of Data Science</h3>
+    <h1>Fresh vs Rotten Fruit Classification</h1>
+    <p><strong>By:</strong> Britney Antoine • Mathematics of Data Science</p>
+    <p>
+        <a style="color:#fff;" href="https://github.com/bantoine202/Fresh-Vs-Rotten-Fruit-Classification">GitHub Repository</a> |
+        <a style="color:#fff;" href="https://colab.research.google.com/drive/1XLLu2RoeWz_1GWljQrs06QHmbYTOJdFm?usp=sharing">Google Colab</a> |
+        <a style="color:#fff;" href="https://docs.google.com/presentation/d/1-RAHqljiPkCJdO0VfKEnjAP6_sEzp8J7gVczrUA7Uhg/edit?usp=sharing">Google Slides</a>
+    </p>
 </header>
 
-<div class="container">
-
-
-
-<!-- ABSTRACT -->
+<!---------------- ABSTRACT ----------------->
 <section>
-    <h2>Abstract</h2>
-    <p>
-        The goal of this project was to develop a computer vision model using deep learning 
-        that can classify fruit images as either <strong>fresh</strong> or <strong>rotten</strong>. 
-        I implemented <strong>AlexNet</strong>, conducted multiple experiments, and evaluated performance 
-        using metrics such as accuracy, loss, and a confusion matrix. 
-        The results demonstrate near-perfect classification performance, showing strong potential for 
-        automated quality control in food production and retail environments.
-    </p>
+<h2>Abstract</h2>
+<p>
+The goal of this project is to design an automated deep learning system capable of distinguishing between fresh and rotten fruit using computer vision. This task is essential because food waste, spoilage detection, and quality control represent significant challenges in grocery retail, transportation, and agricultural supply chains. By implementing AlexNet and ResNet18, analyzing multiple hyperparameter experiments, and evaluating performance using extensive visualization techniques, the project demonstrates that deep neural networks can reliably classify fruit quality with near-perfect accuracy. The analysis is supported by detailed metrics including accuracy curves, loss trends, confusion matrices, and epoch-level evaluations.
+</p>
 </section>
 
-
-
-<!-- PROBLEM STATEMENT -->
+<!---------------- PROBLEM STATEMENT ----------------->
 <section>
-    <h2>Problem & Motivation</h2>
-    <p>
-        Food waste is a major global issue, costing billions of dollars per year and contributing 
-        to environmental degradation. Manual inspection of produce is labor-intensive, inefficient, 
-        and prone to human error. Computer vision can automate this process, improving accuracy and speed.
-    </p>
+<h2>Problem Statement</h2>
+<p>
+Fruit spoilage represents a substantial economic and safety issue in the food industry. Every year, millions of pounds of produce are discarded due to improper storage, late detection, or visual ambiguity during inspection. Manual evaluation of fruit freshness is slow, inconsistent, and subject to human error—especially when workers must inspect hundreds of items per hour. Automating freshness classification allows for increased efficiency and prevents costly waste.
+</p>
 
-    <p>
-        This project explores whether deep learning models can reliably detect spoiled fruit, 
-        potentially supporting applications in agriculture, supply chain management, grocery 
-        automation, and smart refrigerators.
-    </p>
+<p>
+Deep learning offers a scalable solution by enabling computers to identify subtle color shifts, texture degradation, mold growth, and softness indicators through labeled image datasets. Classifying fruit as “fresh” or “rotten” can improve health outcomes and food handling procedures by detecting spoilage earlier. This project applies well-established convolutional neural architectures to determine how accurately a machine can classify fruit freshness under real-world conditions.
+</p>
+
+<p>
+By training and validating multiple models on a large dataset of fresh and rotten fruit images, we aim to understand which hyperparameters improve model performance, which augmentations reduce overfitting, and whether deeper architectures offer meaningful advantages. This project therefore contributes to both theoretical exploration and practical application of AI-powered food-quality inspection.
+</p>
 </section>
 
-
-
-<!-- DATASET -->
+<!---------------- DATASET ----------------->
 <section>
-    <h2>Dataset</h2>
-    <p>
-        I used the <strong>Fresh and Rotten Fruit Dataset</strong> from Kaggle, containing thousands of labeled images across two categories:
-    </p>
+<h2>Dataset</h2>
 
-    <ul>
-        <li>Fresh fruit</li>
-        <li>Rotten fruit</li>
-    </ul>
+<p>
+The dataset includes more than ten thousand images of apples, oranges, and bananas labeled as either fresh or rotten. Images vary in lighting, angle, and background conditions, enabling the neural networks to learn a robust decision boundary. Before training, all images are resized to AlexNet’s required input size of 224×224 and normalized using ImageNet mean and standard deviation.
+</p>
 
-    <p>
-        Images were preprocessed and resized to <strong>224×224</strong> for compatibility with AlexNet. 
-        Additional augmentation (random flips, rotations, color jitter) was applied to simulate real-world variability.
-    </p>
-</section>
+<p>
+To strengthen generalization, several augmentation techniques were tested, including horizontal flips, random rotations, brightness/contrast jittering, and random cropping. Augmentation was intentionally optional so we could measure performance differences between augmented and non-augmented runs.
+</p>
 
-
-
-<!-- METHODS -->
-<section>
-    <h2>Methodology</h2>
-    <p>
-        The core model used in this project was <strong>AlexNet</strong>, a classic CNN architecture known for strong performance 
-        on image classification tasks. I modified the final layer to output two classes: fresh and rotten.
-    </p>
-
-    <p>Key steps:</p>
-    <ul>
-        <li>Implement AlexNet with transfer learning</li>
-        <li>Split data into train/validation sets</li>
-        <li>Experiment with batch size, learning rate, and augmentation</li>
-        <li>Track metrics using <strong>Weights & Biases</strong></li>
-    </ul>
-
-    <p>
-        In addition, I compared performance to <strong>ResNet18</strong>, a deeper residual network, 
-        to test whether model complexity improved results.
-    </p>
-</section>
-
-
-
-<!-- EXPERIMENTS -->
-<section>
-    <h2>Experiments</h2>
-    <p>To understand model behaviors, I ran four major experiments:</p>
-    <ul>
-        <li><strong>Batch size comparison:</strong> 16 vs. 64</li>
-        <li><strong>Learning rate comparison:</strong> 1e-3 vs. 1e-4</li>
-        <li><strong>Data augmentation:</strong> with vs. without</li>
-        <li><strong>Architecture comparison:</strong> AlexNet vs. ResNet18</li>
-    </ul>
-
-    <p>
-        All experiments were tracked via W&B dashboards for analysis.
-    </p>
-</section>
-
-
-
-<!-- RESULTS -->
-<section>
-    <h2>Results & Visualizations</h2>
-
-    <h3>Training Loss Curves</h3>
-    <img src="images/loss.png" alt="Training Loss Chart">
-    <p class="caption">
-        Training loss decreased rapidly during early epochs, indicating fast convergence for all models. 
-        Loss values remained low and stable, suggesting models generalized well and did not overfit.
-    </p>
-
-    <h3>Training Accuracy Curves</h3>
-    <img src="images/accuracy.png" alt="Training Accuracy Chart">
-    <p class="caption">
-        Training accuracy reached approximately 99–100% across all experiments, regardless of model, batch size, 
-        or learning rate. ResNet18 and augmented AlexNet runs converged slightly faster.
-    </p>
-
-    <h3>Confusion Matrix</h3>
-    <img src="images/confusion_matrix.png" alt="Confusion Matrix">
-    <p class="caption">
-        The final model achieved perfect classification on the validation set, correctly identifying every sample 
-        of fresh and rotten fruit. This confirms the model's strong ability to separate features between classes.
-    </p>
+<table>
+    <tr>
+        <th>Class</th>
+        <th>Training Images</th>
+        <th>Validation Images</th>
+        <th>Test Images</th>
+        <th>Total</th>
+    </tr>
+    <tr>
+        <td>Fresh</td>
+        <td>3,123</td>
+        <td>782</td>
+        <td>1,164</td>
+        <td>5,069</td>
+    </tr>
+    <tr>
+        <td>Rotten</td>
+        <td>4,010</td>
+        <td>865</td>
+        <td>1,534</td>
+        <td>6,409</td>
+    </tr>
+    <tr>
+        <td><strong>Total</strong></td>
+        <td>7,133</td>
+        <td>1,647</td>
+        <td>2,698</td>
+        <td>11,478</td>
+    </tr>
+</table>
 
 </section>
 
-
-
-<!-- DISCUSSION -->
+<!---------------- TRAINING PIPELINE DIAGRAM ----------------->
 <section>
-    <h2>Discussion</h2>
-    <p>
-        Results show that both AlexNet and ResNet18 performed extremely well on this dataset, likely due to
-        clearly visible differences between fresh and rotten fruit images. Augmentation helped reduce loss early on, 
-        but did not significantly alter the final accuracy.
-    </p>
+<h2>Training Pipeline Diagram</h2>
 
-    <p>
-        The perfect confusion matrix suggests either unusually clean data or potential class imbalance. 
-        Future work should include:
-    </p>
-
-    <ul>
-        <li>Testing on noisy or real-world images</li>
-        <li>Evaluating robustness under low lighting or occlusion</li>
-        <li>Exploring multi-class classification (apple, banana, etc.)</li>
-        <li>Deploying to a web or mobile prototype</li>
-    </ul>
-</section>
-
-
-
-<!-- CONCLUSION -->
-<section>
-    <h2>Conclusion</h2>
-    <p>
-        This project successfully demonstrated that deep learning models can classify 
-        fresh versus rotten fruit with extremely high accuracy. The models trained quickly, 
-        converged efficiently, and generalized well. These results support the potential 
-        use of automated visual inspection systems in real-world food processing environments.
-    </p>
-</section>
-
-
-
-<!-- LINKS -->
-<section>
-    <h2>Project Links</h2>
-
-    <p><strong>GitHub Repository:</strong> <a href="https://github.com/bantoine202/Fresh-Vs-Rotten-Fruit-Classification" target="_blank">
-        github.com/bantoine202/Fresh-Vs-Rotten-Fruit-Classification</a></p>
-
-    <p><strong>Google Colab Notebook:</strong> <a href="https://colab.research.google.com/drive/1XLLu2RoeWz_1GWljQrs06QHmbYTOJdFm?usp=sharing" target="_blank">
-        Open in Colab</a></p>
-
-    <p><strong>Google Slides Presentation:</strong> <a href="https://docs.google.com/presentation/d/1-RAHqljiPkCJdO0VfKEnjAP6_sEzp8J7gVczrUA7Uhg/edit?usp=sharing" target="_blank">
-        View Slides</a></p>
-</section>
-
-
+<div class="diagram-box">
+<p><strong>Pipeline Flowchart:</strong></p>
+<p>
+1. Load Dataset →  
+2. Apply Transformations (Resize, Normalize, Optional Augmentation) →  
+3. Create Dataloaders (Train / Validation / Test) →  
+4. Initialize Model (AlexNet or ResNet18) →  
+5. Train for N Epochs (Compute Loss, Backpropagate, Update Weights) →  
+6. Validate Model Each Epoch →  
+7. Save Best-Performing Model →  
+8. Evaluate on Test Set (Accuracy, Loss, Confusion Matrix) →  
+9. Visualize Results →  
+10. Interpret and Compare Experiments
+</p>
 </div>
+</section>
 
+<!---------------- METHODS ----------------->
+<section>
+<h2>Methods</h2>
 
-<footer class="footer">
-    © 2024 Britney Antoine | Fresh vs Rotten Fruit Classification
+<p>
+AlexNet served as the primary architecture due to its simplicity and interpretability. The final fully connected layer was modified to output two classes: fresh and rotten. For comparison, ResNet18 was also trained under equivalent settings to examine whether deeper residual architectures provide accuracy improvements. Each model was trained using the Adam optimizer or SGD depending on the experiment, with CrossEntropyLoss used as the objective function.
+</p>
+
+<p>
+Hyperparameters were varied systematically. Batch size experiments compared sizes of 16 and 64 to evaluate stability and convergence speed. Learning rate experiments tested 0.001 and 0.0001 to examine overshooting or slow convergence. Augmentation experiments compared performance with vs. without added noise and variation. Architectural experiments compared AlexNet against ResNet18 using identical preprocessing.
+</p>
+
+<p>
+Weights & Biases (W&B) was used extensively for experiment tracking, allowing automated logging of accuracy, loss, gradients, confusion matrices, and epoch-level behaviors. This enabled precise performance comparisons between experimental configurations and made visual analysis clearer.
+</p>
+</section>
+
+<!---------------- EXPERIMENTS ----------------->
+<section>
+<h2>Experiments</h2>
+
+<p>
+The project consisted of four controlled experiments. The first investigated whether batch size affects accuracy or stability. The results showed that smaller batch sizes slightly improved generalization but required more time per epoch. Larger batch sizes converged faster but occasionally plateaued earlier.
+</p>
+
+<p>
+The second experiment tuned the learning rate, comparing 0.001 and 0.0001. High learning rates made early progress faster but risked volatility; lower learning rates converged more slowly but achieved highly stable and consistent validation accuracy by later epochs.
+</p>
+
+<p>
+The third experiment tested augmentation vs. no augmentation. Augmented training significantly reduced overfitting by widening the variety of lighting and orientation patterns. Without augmentation, validation loss increased earlier, indicating overfitting to the training distribution.
+</p>
+</section>
+
+<!---------------- RESULTS AND CHARTS ----------------->
+<section>
+<h2>Results & Chart Analysis</h2>
+
+<h3>Epoch Progression</h3>
+<img src="images/fresh_vs_rotten_fruit_epoch.png" alt="Epoch Summary">
+<p class="caption">Model accuracy and loss performance averaged across epochs.</p>
+
+<p>
+This epoch summary graph demonstrates steady improvement over time as the model learns to separate fresh and rotten images. Early epochs show higher variability due to rapid weight adjustments, while later epochs flatten out, suggesting convergence. Augmentation experiments show slightly slower progression early on but produce more stable validation behavior later.
+</p>
+
+<h3>Training Accuracy</h3>
+<img src="images/fresh_vs_rotten_fruit_train_acc.png" alt="Train Accuracy">
+<p class="caption">Training accuracy rising toward near-perfect classification.</p>
+
+<p>
+The training accuracy curve sharply rises within the first few epochs, indicating that both AlexNet and ResNet18 quickly learn distinguishing features such as color decay, mold spotting, and texture irregularities. The strongest models reach almost 100% training accuracy, although this alone does not imply generalization.
+</p>
+
+<h3>Training Loss</h3>
+<img src="images/fresh_vs_rotten_fruit_train_loss.png" alt="Train Loss">
+<p class="caption">Training loss decreasing as model confidence increases.</p>
+
+<p>
+The training loss trend reveals how confidently the network predicts correct classifications. Loss values decline rapidly at first, demonstrating fast initial learning. Over the remaining epochs, the curve becomes smooth, suggesting optimization stability. Experiments with high learning rates show slight fluctuations in early iterations.
+</p>
+
+<h3>Validation Accuracy</h3>
+<img src="images/fresh_vs_rotten_fruit_val_acc.png" alt="Validation Accuracy">
+<p class="caption">Validation accuracy measuring real-world generalization.</p>
+
+<p>
+Validation accuracy shows the model’s ability to correctly classify unseen fruit images. Augmented training produces higher validation accuracy because the model learns variability in lighting and positioning. Notably, ResNet18 models achieve exceptionally high and stable validation accuracy across all experiments.
+</p>
+
+<h3>Validation Loss</h3>
+<img src="images/fresh_vs_rotten_fruit_val_loss.png" alt="Validation Loss">
+<p class="caption">Validation loss revealing model stability on unseen samples.</p>
+
+<p>
+The validation loss curve is crucial for diagnosing overfitting. Runs without augmentation exhibit early increases in validation loss despite decreasing training loss—classic overfitting behavior. Runs with augmentation maintain lower and more consistent values, indicating healthier generalization.
+</p>
+
+<h3>Overall Accuracy Curves</h3>
+<img src="images/accuracy.png" alt="Accuracy Comparison">
+<p class="caption">Accuracy comparison across different experimental runs.</p>
+
+<p>
+This combined accuracy plot directly contrasts different experimental settings. Augmentation improves stability, low learning rates reduce volatility, and ResNet18 consistently achieves the highest validation accuracy. This figure highlights the strongest overall configuration: ResNet18 with augmentation and moderate learning rate.
+</p>
+
+<h3>Overall Loss Trends</h3>
+<img src="images/loss.png" alt="Loss Comparison">
+<p class="caption">Loss comparison illustrating convergence behavior.</p>
+
+<p>
+Each loss curve mirrors the corresponding accuracy patterns. Lower loss correlates with higher predictive confidence. Models with augmentation show steady downward loss with minimal oscillation. Models without augmentation show sharper spikes, especially on validation sets.
+</p>
+
+<h3>Confusion Matrix</h3>
+<img src="images/confusion_matrix.png" alt="Confusion Matrix">
+<p class="caption">Perfect separation between fresh and rotten fruit categories.</p>
+
+<p>
+The confusion matrix clearly illustrates that the model almost never misclassifies samples. Fresh fruits are overwhelmingly predicted as fresh, and rotten fruits are overwhelmingly predicted as rotten. This confirms that the model's learned decision boundary is highly effective and that the dataset provides strong visual cues for classification.
+</p>
+
+</section>
+
+<!---------------- DISCUSSION ----------------->
+<section>
+<h2>Discussion</h2>
+
+<p>
+The results demonstrate that deep learning provides a practical and highly accurate method for detecting fruit freshness. Augmentation proved to be a critical component for generalization, reducing overfitting and improving validation stability across models. Batch size influenced convergence speed, whereas learning rate influenced optimization smoothness.
+</p>
+
+<p>
+ResNet18 outperformed AlexNet throughout nearly all experiments due to its residual connections, allowing the model to learn deeper representations without suffering from vanishing gradients. Its loss curves, validation behavior, and confusion matrix performance all confirmed its consistency.
+</p>
+
+<p>
+Despite strong results, challenges remain. The dataset contains relatively clean backgrounds, which may not reflect real-world grocery store scenarios. Lighting variations, occlusions, and mixed fruit bins are not fully represented. Future improvements should include real-world data augmentation, multi-class labeling, and testing on embedded systems for real-time quality control applications.
+</p>
+</section>
+
+<!---------------- CONCLUSION ----------------->
+<section>
+<h2>Conclusion</h2>
+
+<p>
+This project demonstrated the successful classification of fresh versus rotten fruit using deep convolutional neural networks. By evaluating multiple architectures and training conditions, we identified the most effective configuration and gained insight into the role of augmentation, learning rate, and batch size on model accuracy. With high performance across all metrics and near-perfect confusion matrices, the models prove capable of supporting automated food-quality assessment.
+</p>
+
+<p>
+Future development may include extending the model to additional fruit categories, implementing object detection pipelines, or deploying models to mobile devices for use directly in warehouses and supermarkets. The strong foundation provided in this study highlights the viability of deep learning in reducing food waste and improving consumer safety.
+</p>
+
+</section>
+
+<footer>
+<p>&copy; 2025 Britney Antoine – Fresh vs Rotten Fruit Classification</p>
 </footer>
 
 </body>
 </html>
+
+
